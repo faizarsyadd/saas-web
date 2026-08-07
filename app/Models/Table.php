@@ -9,7 +9,15 @@ class Table extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'table_number',
+        'qr_code_key',
+        'status',
+        'capacity',
+        'shape',
+        'x_pos',
+        'y_pos'
+    ];
 
     public function orders()
     {

@@ -11,13 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-       Schema::create('tables', function (Blueprint $table) {
-    $table->id();
-    $table->string('table_number');
-    $table->string('qr_code_key')->unique()->nullable();
-    $table->enum('status', ['available', 'occupied', 'reserved'])->default('available');
-    $table->timestamps();
-});
+        Schema::create('tables', function (Blueprint $table) {
+            $table->id();
+            $table->string('table_number');
+            $table->string('qr_code_key')->nullable();
+            $table->integer('capacity')->default(4);
+            $table->string('shape')->default('square'); // square, circle, rectangle
+            $table->string('status')->default('available'); // available, occupied, reserved
+            $table->float('x_pos')->default(10);
+            $table->float('y_pos')->default(10);
+            $table->timestamps();
+        });
     }
 
     /**

@@ -22,6 +22,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'department',
+        'role',
+        'shift_senin',
+        'shift_selasa',
+        'shift_rabu',
+        'shift_kamis',
+        'shift_jumat',
     ];
 
     /**
