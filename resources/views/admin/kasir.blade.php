@@ -1,134 +1,10 @@
-<!DOCTYPE html>
-<html class="light" lang="id">
-<head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>DineFlow - Terminal Kasir Lantai</title>
+@extends('layouts.app')
 
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+@section('title', 'DineFlow - Terminal Kasir Lantai')
 
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com" rel="preconnect"/>
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-container-lowest": "#ffffff",
-                        "inverse-on-surface": "#f3f0ef",
-                        "primary": "#b20112",
-                        "on-surface": "#1c1b1b",
-                        "on-primary-container": "#fff1ef",
-                        "on-tertiary": "#ffffff",
-                        "tertiary-fixed-dim": "#83cfff",
-                        "on-primary-fixed-variant": "#93000d",
-                        "primary-fixed-dim": "#ffb4ab",
-                        "error": "#ba1a1a",
-                        "tertiary-container": "#0077a6",
-                        "surface-container-highest": "#e5e2e1",
-                        "secondary-fixed": "#e8e1df",
-                        "tertiary-fixed": "#c7e7ff",
-                        "surface-container-high": "#eae7e7",
-                        "on-primary-fixed": "#410002",
-                        "inverse-surface": "#313030",
-                        "surface-container-low": "#f6f3f2",
-                        "on-secondary-fixed": "#1e1b1a",
-                        "primary-container": "#d62828",
-                        "surface-dim": "#dcd9d9",
-                        "primary-fixed": "#ffdad6",
-                        "surface-bright": "#fcf9f8",
-                        "on-secondary": "#ffffff",
-                        "background": "#fcf9f8",
-                        "surface-tint": "#bd1119",
-                        "on-secondary-fixed-variant": "#4a4645",
-                        "secondary": "#625d5c",
-                        "tertiary": "#005d83",
-                        "secondary-fixed-dim": "#ccc5c3",
-                        "on-error-container": "#93000a",
-                        "surface": "#fcf9f8",
-                        "on-background": "#1c1b1b",
-                        "inverse-primary": "#ffb4ab",
-                        "surface-container": "#f0eded",
-                        "on-tertiary-fixed": "#001e2e",
-                        "secondary-container": "#e5dedc",
-                        "surface-variant": "#e5e2e1",
-                        "on-primary": "#ffffff",
-                        "outline-variant": "#e5bdb9",
-                        "on-surface-variant": "#5c403d",
-                        "outline": "#906f6b",
-                        "on-tertiary-fixed-variant": "#004c6c",
-                        "on-tertiary-container": "#ebf5ff",
-                        "on-error": "#ffffff",
-                        "error-container": "#ffdad6",
-                        "on-secondary-container": "#666260",
-                        "success-green": "#2E7D32",
-                        "accent-orange": "#F57C00",
-                    },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "xl": "32px",
-                        "container-margin": "40px",
-                        "gutter": "24px",
-                        "unit": "8px",
-                        "md": "16px",
-                        "lg": "24px",
-                        "sm": "8px",
-                        "xs": "4px"
-                    },
-                    "fontFamily": {
-                        "display": ["Inter", "sans-serif"],
-                        "label-md": ["Inter", "sans-serif"],
-                        "title-lg": ["Inter", "sans-serif"],
-                        "body-lg": ["Inter", "sans-serif"],
-                        "headline-md": ["Inter", "sans-serif"],
-                        "tabular-nums": ["Inter", "sans-serif"],
-                        "headline-lg": ["Inter", "sans-serif"],
-                        "body-md": ["Inter", "sans-serif"]
-                    },
-                    "fontSize": {
-                        "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
-                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                        "tabular-nums": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
-                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
-                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        .ambient-shadow {
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.05), 0 16px 32px rgba(0,0,0,0.02);
-        }
-        .squishy-btn:active {
-            transform: scale(0.97);
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .drag-cursor { cursor: grab; }
-        .drag-cursor:active { cursor: grabbing; }
-        [x-cloak] { display: none !important; }
-    </style>
-</head>
-
-<body class="bg-background text-on-background font-body-md h-screen w-full overflow-hidden flex flex-col selection:bg-primary-container selection:text-on-primary-container" x-data="dineFlowKasir()" x-init="initKasir()">
-
-@include('layouts.sidebar1')
-
-<!-- Main Workspace Area -->
-<main class="flex-1 flex flex-col md:flex-row md:ml-[280px] bg-surface-container-low h-full overflow-hidden">
+@section('content')
+<!-- Main Workspace Area (Sudah dihapus md:ml-[280px]) -->
+<div class="flex-1 flex flex-col md:flex-row bg-surface-container-low h-full overflow-hidden" x-data="dineFlowKasir()" x-init="initKasir()">
 
     <!-- Floor Plan (Left) -->
     <section class="flex-1 flex flex-col p-lg border-r border-outline-variant h-full overflow-y-auto">
@@ -350,9 +226,10 @@
             </form>
         </div>
     </div>
+</div>
+@endsection
 
-</main>
-
+@push('scripts')
 <script>
     function dineFlowKasir() {
         return {
@@ -408,7 +285,6 @@
                 }
             },
 
-            // --- Drag & Drop Core Logic Refactored ---
             startDrag(e, table) {
                 if (!this.isEditMode) return;
                 this.draggedTable = table;
@@ -430,7 +306,6 @@
                 let newX = this.initialTableX + (deltaX / rect.width) * 100;
                 let newY = this.initialTableY + (deltaY / rect.height) * 100;
 
-                // Batas dynamic berdasarkan bentuk meja
                 const maxX = this.draggedTable.shape === 'rectangle' ? 75 : 85;
                 const maxY = 82;
 
@@ -481,7 +356,6 @@
                     });
                     const data = await res.json();
                     if (data.success && data.table) {
-                        // Push langsung ke state tanpa reload
                         this.tables.push(data.table);
                         this.openAddModal = false;
                         this.newTable = { table_number: '', capacity: 4, shape: 'square' };
@@ -517,7 +391,6 @@
                 }
             },
 
-            // --- Operational & Calculation Logic ---
             get subtotal() {
                 if (!this.activeOrder || !this.activeOrder.items) return 0;
                 return this.activeOrder.items.reduce((sum, item) => sum + (item.price * item.qty), 0);
@@ -571,5 +444,4 @@
         }
     }
 </script>
-</body>
-</html>
+@endpush

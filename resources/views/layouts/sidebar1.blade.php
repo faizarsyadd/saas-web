@@ -25,8 +25,9 @@
     <!-- Header Logo & Toggle Button -->
     <div class="flex items-center justify-between mb-xl px-xs">
         <div class="flex items-center gap-md">
-            <div class="w-10 h-10 rounded bg-primary-container flex-shrink-0 flex items-center justify-center text-on-primary font-bold">
-                DF
+            <!-- Icon Logo diganti dari text DF ke image icon.png -->
+            <div class="w-10 h-10 rounded bg-primary-container/10 flex-shrink-0 flex items-center justify-center overflow-hidden p-1">
+                <img src="{{ asset('image/icon.png') }}" alt="DineFlow Logo" class="w-full h-full object-contain">
             </div>
             <div x-show="sidebarOpen" x-transition class="whitespace-nowrap">
                 <h1 class="font-display text-headline-md font-bold text-primary">DineFlow</h1>
@@ -53,7 +54,7 @@
            href="{{ route('admin.dashboard') }}" 
            :title="!sidebarOpen ? 'Pusat Komando' : ''">
             <span class="material-symbols-outlined flex-shrink-0" style="{{ request()->routeIs('admin.dashboard') || request()->routeIs('admin.index') ? "font-variation-settings: 'FILL' 1;" : '' }}">dashboard</span>
-            <span x-show="sidebarOpen" x-transition class="font-body-md text-body-md whitespace-nowrap">Pusat Komando</span>
+            <span x-show="sidebarOpen" x-transition class="font-body-md text-body-md whitespace-nowrap">Dashboard</span>
         </a>
 
         <a class="flex items-center gap-md px-md py-sm rounded {{ request()->routeIs('admin.kasir') ? 'text-primary font-bold border-r-4 border-primary bg-primary-container/10' : 'text-secondary font-medium hover:bg-surface-container-high' }} transition-all" 

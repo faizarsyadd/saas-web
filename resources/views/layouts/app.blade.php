@@ -6,6 +6,8 @@
     <title>{{ $title ?? 'DineFlow Pusat Kontrol' }}</title>
     
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Jika menggunakan format PNG -->
+    <link rel="icon" type="image/png" href="{{ asset('image/icon.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -96,6 +98,7 @@
         }
       }
     </script>
+    
     <style>
         body { background-color: #FAFAFA; }
         .glass-header { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid #E5E5E5; }
@@ -108,9 +111,12 @@
     <!-- Sidebar Layout -->
     @include('layouts.sidebar1')
 
-    <!-- Main Content Area -->
-    <main class="flex-1 flex flex-col min-w-0 overflow-y-auto">
-        @yield('content')
+    <!-- Main Content Area (Ditambahkan ml-64 agar tergeser dari sidebar fixed dan p-8 untuk jarak internal) -->
+    <main class="flex-1 ml-64 flex flex-col min-w-0 overflow-y-auto p-8">
+        <!-- Wrapper terpusat secara horizontal (center) -->
+        <div class="max-w-7xl w-full mx-auto">
+            @yield('content')
+        </div>
     </main>
 
     <!-- Stack tempat menampung JavaScript khusus halaman -->

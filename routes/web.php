@@ -8,7 +8,30 @@ use App\Http\Controllers\Admin\KasirController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\CrmController;
 use App\Http\Controllers\KitchenController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CartController;
+
+
+// Route untuk Halaman User
+Route::prefix('user')->name('user.')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('index');
+    Route::get('/table', [UserController::class, 'table'])->name('table');
+    Route::get('/table/select/{number}', [UserController::class, 'selectTable'])->name('select_table');
+
+    // Route Keranjang & AJAX Cart Actions
+    Route::get('/keranjang', [CartController::class, 'index'])->name('keranjang');
+    Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');       // Hasil: user.cart.add
+    Route::post('/cart/update', [CartController::class, 'updateQuantity'])->name('cart.update'); // Hasil: user.cart.update
+    Route::post('/cart/remove', [CartController::class, 'removeItem'])->name('cart.remove');    // Hasil: user.cart.remove
+
+    Route::get('/menu', [UserController::class, 'menu'])->name('menu');
+    Route::get('/menu/{id}', [UserController::class, 'detailMenu'])->name('detail_menu');
+    Route::get('/pay-qris', [UserController::class, 'payQris'])->name('pay_qris');
+    Route::get('/status-pesanan', [UserController::class, 'statusPesanan'])->name('status_pesanan');
+    Route::get('/riwayat', [UserController::class, 'riwayat'])->name('riwayat');
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +54,8 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     
     // Halaman Utama Admin & Dashboard
     Route::get('/', function () { return view('admin.index'); })->name('index');
-    Route::get('/dashboard', function () { return view('admin.index'); })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard'); // Menjadi: admin.dashboard
+    Route::get('/report/print', [DashboardController::class, 'printReport'])->name('report.print'); // Menjadi: admin.report.print
 
     // Halaman Staff
     Route::get('/staff', [StaffController::class, 'index'])->name('staff');
@@ -57,14 +81,14 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::post('/dapur/item/{id}/status', [KitchenController::class, 'updateItemStatus'])->name('dapur.item.status');
     Route::post('/dapur/order/{id}/complete', [KitchenController::class, 'completeOrder'])->name('dapur.order.complete');
     
-    // Modul Inventory (Lengkap dengan Index, Store, Update, Destroy)
+    // Modul Inventory
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
     Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store');
     Route::put('/inventory/{id}', [InventoryController::class, 'update'])->name('inventory.update');
     Route::delete('/inventory/{id}', [InventoryController::class, 'destroy'])->name('inventory.destroy');
 
-    // CRM DineFlow
-    Route::get('/crm', [DashboardController::class, 'index'])->name('crm');
+   // CRM DineFlow
+Route::get('/crm', [CrmController::class, 'index'])->name('crm');
 });
 
 

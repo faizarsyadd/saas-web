@@ -1,351 +1,348 @@
-<!DOCTYPE html>
-<html class="light" lang="id">
-<head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>DineFlow - Pusat Komando Admin</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    "colors": {
-                        "surface-container-lowest": "#ffffff",
-                        "inverse-on-surface": "#f3f0ef",
-                        "primary": "#b20112",
-                        "on-surface": "#1c1b1b",
-                        "on-primary-container": "#fff1ef",
-                        "on-tertiary": "#ffffff",
-                        "tertiary-fixed-dim": "#83cfff",
-                        "on-primary-fixed-variant": "#93000d",
-                        "primary-fixed-dim": "#ffb4ab",
-                        "error": "#ba1a1a",
-                        "tertiary-container": "#0077a6",
-                        "surface-container-highest": "#e5e2e1",
-                        "secondary-fixed": "#e8e1df",
-                        "tertiary-fixed": "#c7e7ff",
-                        "surface-container-high": "#eae7e7",
-                        "on-primary-fixed": "#410002",
-                        "inverse-surface": "#313030",
-                        "surface-container-low": "#f6f3f2",
-                        "on-secondary-fixed": "#1e1b1a",
-                        "primary-container": "#d62828",
-                        "surface-dim": "#dcd9d9",
-                        "primary-fixed": "#ffdad6",
-                        "surface-bright": "#fcf9f8",
-                        "on-secondary": "#ffffff",
-                        "background": "#fcf9f8",
-                        "surface-tint": "#bd1119",
-                        "on-secondary-fixed-variant": "#4a4645",
-                        "secondary": "#625d5c",
-                        "tertiary": "#005d83",
-                        "secondary-fixed-dim": "#ccc5c3",
-                        "on-error-container": "#93000a",
-                        "surface": "#fcf9f8",
-                        "on-background": "#1c1b1b",
-                        "inverse-primary": "#ffb4ab",
-                        "surface-container": "#f0eded",
-                        "on-tertiary-fixed": "#001e2e",
-                        "secondary-container": "#e5dedc",
-                        "surface-variant": "#e5e2e1",
-                        "on-primary": "#ffffff",
-                        "outline-variant": "#e5bdb9",
-                        "on-surface-variant": "#5c403d",
-                        "outline": "#906f6b",
-                        "on-tertiary-fixed-variant": "#004c6c",
-                        "on-tertiary-container": "#ebf5ff",
-                        "on-error": "#ffffff",
-                        "error-container": "#ffdad6",
-                        "on-secondary-container": "#666260"
+@extends('layouts.app')
+
+@section('title', 'DineFlow - Pusat Komando')
+
+@section('content')
+<!-- Membungkus container utama dengan x-data untuk kontrol modal -->
+<div class="max-w-7xl mx-auto space-y-8" x-data="{ openReportModal: false }">
+
+    <!-- Header Top Section -->
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Pusat Komando Admin</h1>
+            <p class="text-sm text-gray-500 mt-1">Monitoring real-time transaksi, grafik performa, dan status operasional cabang</p>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                Shift Aktif
+            </span>
+            
+            <!-- Tombol untuk membuka Modal Form Cetak Laporan -->
+            <button @click="openReportModal = true" type="button" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-lg shadow-sm transition-colors flex items-center gap-2 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                </svg>
+                Cetak Laporan Hari Ini
+            </button>
+        </div>
+    </div>
+
+    <!-- 1. Key Metrics Section -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Card 1: Pendapatan -->
+        <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Pendapatan Kotor Hari Ini</span>
+                <span class="p-2 bg-red-50 text-red-600 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </span>
+            </div>
+            <div>
+                <h3 class="text-2xl font-black text-gray-900">
+                    Rp {{ number_format($grossRevenue ?? 0, 0, ',', '.') }}
+                </h3>
+                <div class="flex items-center gap-2 mt-2">
+                    <span class="text-xs font-bold px-2 py-0.5 rounded {{ ($revenuePercentageChange ?? 0) >= 0 ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600' }}">
+                        {{ ($revenuePercentageChange ?? 0) >= 0 ? '+' : '' }}{{ $revenuePercentageChange ?? 0 }}%
+                    </span>
+                    <span class="text-xs text-gray-400">vs Rp {{ number_format($yesterdayRevenue ?? 0, 0, ',', '.') }} kemarin</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2: AOV -->
+        <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Rata-rata Nilai Pesanan</span>
+                <span class="p-2 bg-red-50 text-red-600 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                </span>
+            </div>
+            <div>
+                <h3 class="text-2xl font-black text-gray-900">
+                    Rp {{ number_format($averageOrderValue ?? 0, 0, ',', '.') }}
+                </h3>
+                <div class="flex items-center gap-2 mt-2">
+                    <span class="text-xs font-bold px-2 py-0.5 rounded {{ ($avgOrderPercentageChange ?? 0) >= 0 ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-600' }}">
+                        {{ ($avgOrderPercentageChange ?? 0) >= 0 ? '+' : '' }}{{ $avgOrderPercentageChange ?? 0 }}%
+                    </span>
+                    <span class="text-xs text-gray-400">vs Rp {{ number_format($yesterdayAvgOrderValue ?? 0, 0, ',', '.') }} kemarin</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3: Biaya Tenaga Kerja -->
+        <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Estimasi Biaya Tenaga Kerja</span>
+                <span class="p-2 bg-amber-50 text-amber-600 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                </span>
+            </div>
+            <div>
+                <h3 class="text-2xl font-black text-gray-900">
+                    {{ $laborCostPercentage ?? '24.8' }}%
+                </h3>
+                <div class="flex items-center gap-2 mt-2">
+                    <span class="text-xs font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-700">Target ≤ 22%</span>
+                    <span class="text-xs text-gray-400">Rasio operasional</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Middle Grid: Chart & Ringkasan Kritis -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Grafik Performa -->
+        <div class="lg:col-span-2 bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h2 class="text-base font-bold text-gray-900">Variansi Pendapatan 24 Jam</h2>
+                    <p class="text-xs text-gray-500">Persentase & akumulasi estimasi omset harian</p>
+                </div>
+            </div>
+            <div class="w-full h-64">
+                <canvas id="performanceChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Ringkasan Kritis -->
+        <div class="bg-white p-6 rounded-xl border-l-4 border-l-red-600 border-y border-r border-gray-100 shadow-sm flex flex-col justify-between">
+            <div>
+                <div class="flex items-center gap-2 mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <span class="text-xs font-extrabold text-red-600 uppercase tracking-wider">Ringkasan Kritis</span>
+                </div>
+
+                <h3 class="text-xl font-bold text-gray-900 mb-1">
+                    {{ count($incidents ?? []) }} Insiden Terdeteksi
+                </h3>
+                <p class="text-xs text-gray-500 mb-4">
+                    Beberapa catatan penting memerlukan perhatian langsung dari administrator.
+                </p>
+
+                <div class="space-y-3 max-h-44 overflow-y-auto pr-1">
+                    @forelse($incidents ?? [] as $incident)
+                        <div class="p-3 bg-red-50/50 rounded-lg border border-red-100">
+                            <p class="text-xs font-bold text-gray-800">{{ $incident->title }}</p>
+                            <p class="text-[11px] text-gray-500 mt-0.5 line-clamp-1">{{ $incident->description }}</p>
+                        </div>
+                    @empty
+                        <div class="text-center py-6">
+                            <p class="text-xs text-gray-400">Sistem berjalan normal tanpa kendala.</p>
+                        </div>
+                    @endforelse
+                </div>
+            </div>
+
+            <div class="pt-4 mt-4 border-t border-gray-100 flex items-center justify-between">
+                <span class="text-xs font-medium text-gray-500">Total Status Restoran</span>
+                <span class="text-xs font-bold text-gray-900">Normal</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Bottom Table Section -->
+    <div class="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+        <div class="p-5 border-b border-gray-100 flex items-center justify-between bg-white">
+            <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-600"></span>
+                <h2 class="text-base font-bold text-gray-900">Performa Cabang Utama</h2>
+            </div>
+            <span class="px-3 py-1 bg-red-50 text-red-600 rounded-full text-xs font-bold">
+                {{ count($topBranches ?? []) }} Cabang Aktif
+            </span>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+                <thead class="bg-gray-50 text-gray-500 font-bold uppercase border-b border-gray-100">
+                    <tr>
+                        <th class="py-3.5 px-6">Nama Cabang / ID</th>
+                        <th class="py-3.5 px-6">Total Pendapatan Hari Ini</th>
+                        <th class="py-3.5 px-6 text-center">Jumlah Pesanan</th>
+                        <th class="py-3.5 px-6 text-center">Indikator Sisa Capaian</th>
+                        <th class="py-3.5 px-6 text-right">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100 font-medium text-gray-700">
+                    @forelse($topBranches ?? [] as $branch)
+                        <tr class="hover:bg-gray-50/60 transition-colors">
+                            <td class="py-4 px-6">
+                                <p class="font-bold text-gray-900 text-sm">{{ $branch->name ?? 'Cabang Pusat' }}</p>
+                                <p class="text-[11px] text-gray-400">ID: #{{ $branch->id ?? '1' }}</p>
+                            </td>
+                            <td class="py-4 px-6 font-bold text-red-600 text-sm">
+                                Rp {{ number_format($branch->today_revenue ?? 0, 0, ',', '.') }}
+                            </td>
+                            <td class="py-4 px-6 text-center font-semibold">
+                                {{ $branch->orders_count ?? 0 }} Transaksi
+                            </td>
+                            <td class="py-4 px-6 text-center">
+                                <div class="w-36 bg-gray-200 h-2 rounded-full mx-auto overflow-hidden">
+                                    <div class="bg-red-600 h-full rounded-full" style="width: 70%;"></div>
+                                </div>
+                                <span class="text-[10px] font-bold text-red-600 mt-1 inline-block">TARGET 70%</span>
+                            </td>
+                            <td class="py-4 px-6 text-right">
+                                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                    Online
+                                </span>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="py-8 text-center text-xs text-gray-400">
+                                Belum ada data cabang yang tersedia.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- MODAL FORM CETAK LAPORAN -->
+    <div x-show="openReportModal" 
+         x-cloak
+         class="fixed inset-0 z-50 overflow-y-auto bg-gray-900/50 backdrop-blur-sm flex items-center justify-center p-4"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0">
+
+        <div @click.away="openReportModal = false" 
+             class="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 border border-gray-100 space-y-5 transform transition-all">
+            
+            <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+                <div class="flex items-center gap-2.5">
+                    <div class="p-2 bg-red-50 text-red-600 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-gray-900">Cetak Laporan Transaksi</h3>
+                        <p class="text-xs text-gray-500">Pilih parameter pencetakan laporan harian</p>
+                    </div>
+                </div>
+                <button @click="openReportModal = false" class="text-gray-400 hover:text-gray-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Form Ekspor / Cetak -->
+            <form action="{{ route('admin.report.print') }}" method="GET" target="_blank" class="space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Tanggal Laporan</label>
+                    <input type="date" name="report_date" value="{{ date('Y-m-d') }}" class="w-full text-xs px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-red-500 focus:border-red-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Tipe Laporan</label>
+                    <select name="type" class="w-full text-xs px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-red-500 focus:border-red-500 outline-none">
+                        <option value="summary">Ringkasan Eksekutif (PDF)</option>
+                        <option value="detailed">Detail Transaksi Lengkap (PDF)</option>
+                        <option value="excel">Ekspor Data Raw (Excel/CSV)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-gray-700 mb-1">Opsi Cabang</label>
+                    <select name="branch_id" class="w-full text-xs px-3 py-2 border border-gray-300 rounded-lg focus:ring-1 focus:ring-red-500 focus:border-red-500 outline-none">
+                        <option value="all">Semua Cabang Utama</option>
+                        @foreach($topBranches ?? [] as $b)
+                            <option value="{{ $b->id }}">{{ $b->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="pt-3 flex items-center justify-end gap-3 border-t border-gray-100">
+                    <button type="button" @click="openReportModal = false" class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-semibold rounded-lg transition-colors">
+                        Batal
+                    </button>
+                    <button type="submit" @click="openReportModal = false" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-xs font-semibold rounded-lg shadow-sm transition-colors flex items-center gap-1.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                        </svg>
+                        Cetak Laporan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+@endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const ctx = document.getElementById('performanceChart');
+        if (!ctx) return;
+
+        const chartLabels = {!! json_encode($hourlyLabels ?? ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00']) !!};
+        const chartValues = {!! json_encode($hourlyRevenue ?? [0, 0, 0, 0, 0, 0, 0]) !!};
+
+        const gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 250);
+        gradient.addColorStop(0, 'rgba(220, 38, 38, 0.15)');
+        gradient.addColorStop(1, 'rgba(220, 38, 38, 0.0)');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: chartLabels,
+                datasets: [{
+                    label: 'Pendapatan (Rp)',
+                    data: chartValues,
+                    borderColor: '#dc2626',
+                    borderWidth: 2,
+                    backgroundColor: gradient,
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 3,
+                    pointBackgroundColor: '#dc2626',
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        grid: { color: '#f3f4f6' },
+                        ticks: { font: { size: 11 }, color: '#9ca3af' }
                     },
-                    "borderRadius": {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                    "spacing": {
-                        "xl": "32px",
-                        "container-margin": "40px",
-                        "gutter": "24px",
-                        "unit": "8px",
-                        "md": "16px",
-                        "lg": "24px",
-                        "sm": "8px",
-                        "xs": "4px"
-                    },
-                    "fontFamily": {
-                        "display": ["Inter"],
-                        "label-md": ["Inter"],
-                        "title-lg": ["Inter"],
-                        "body-lg": ["Inter"],
-                        "headline-md": ["Inter"],
-                        "tabular-nums": ["Inter"],
-                        "headline-lg": ["Inter"],
-                        "body-md": ["Inter"]
-                    },
-                    "fontSize": {
-                        "display": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
-                        "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
-                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
-                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
-                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
-                        "tabular-nums": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
-                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
-                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+                    y: {
+                        grid: { color: '#f3f4f6' },
+                        ticks: {
+                            font: { size: 11 },
+                            color: '#9ca3af',
+                            callback: value => 'Rp ' + (value >= 1000 ? (value/1000) + 'k' : value)
+                        },
+                        beginAtZero: true
                     }
                 }
             }
-        }
-    </script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FAFAFA;
-        }
-        .shadow-stripe-card {
-            box-shadow: 0 2px 5px -1px rgba(50, 50, 93, 0.25), 0 1px 3px -1px rgba(0, 0, 0, 0.3);
-        }
-        .shadow-stripe-ambient {
-            box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25), 0 8px 16px -8px rgba(0, 0, 0, 0.3);
-        }
-        .sparkline-up {
-            stroke: #059669;
-            fill: none;
-            stroke-width: 2;
-            stroke-linecap: round;
-        }
-        .sparkline-down {
-            stroke: #D62828;
-            fill: none;
-            stroke-width: 2;
-            stroke-linecap: round;
-        }
-    </style>
-</head>
-<body class="bg-background text-on-background flex h-screen overflow-hidden">
-
-@include('layouts.sidebar1')
-
-<!-- Main Content Area -->
-<main class="flex-1 ml-0 md:ml-[280px] flex flex-col h-screen overflow-hidden">
-    <!-- TopNavBar -->
-    <header class="sticky top-0 w-full z-40 bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant shadow-sm flex justify-between items-center px-container-margin py-md">
-        <div class="flex items-center gap-md md:hidden">
-            <h1 class="font-display text-headline-sm font-bold text-primary">DineFlow</h1>
-        </div>
-        <div class="hidden md:block">
-            <h2 class="font-title-lg text-title-lg text-on-surface">Pusat Komando</h2>
-        </div>
-        <div class="flex items-center gap-lg">
-            <button class="bg-primary-container text-on-primary px-md py-sm rounded-lg font-label-md text-label-md active:opacity-80 transition-opacity">
-                Shift Aktif
-            </button>
-            <div class="flex items-center gap-md text-on-surface-variant">
-                <button class="hover:text-primary transition-colors">
-                    <span class="material-symbols-outlined">notifications</span>
-                </button>
-                <form action="{{ route('logout') }}" method="POST" class="inline">
-                    @csrf
-                    <button type="submit" title="Keluar" class="hover:text-error transition-colors flex items-center">
-                        <span class="material-symbols-outlined">logout</span>
-                    </button>
-                </form>
-                <div class="flex items-center gap-2 ml-sm">
-                    <div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center font-bold text-xs">
-                        {{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 2)) }}
-                    </div>
-                    <span class="text-xs font-semibold text-on-surface hidden sm:inline">{{ Auth::user()->name ?? 'Admin' }}</span>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Canvas -->
-    <div class="flex-1 overflow-y-auto p-container-margin flex gap-gutter">
-        <!-- Left/Main Column -->
-        <div class="flex-1 flex flex-col gap-xl max-w-6xl">
-            <!-- Hero Metrics (Bento Style) -->
-            <section class="grid grid-cols-1 md:grid-cols-3 gap-lg">
-                <!-- Metric 1: Revenue -->
-                <div class="bg-surface-container-lowest p-lg rounded-[18px] shadow-stripe-card flex flex-col justify-between">
-                    <div class="flex justify-between items-start mb-md">
-                        <span class="font-label-md text-label-md text-secondary uppercase tracking-wider">Pendapatan Kotor</span>
-                        <span class="bg-surface-container-high text-on-surface px-2 py-1 rounded text-xs font-medium flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[14px]">arrow_upward</span> 12%
-                        </span>
-                    </div>
-                    <div>
-                        <div class="font-headline-lg text-headline-lg text-on-surface mb-sm">Rp 12.450.000</div>
-                        <div class="font-body-md text-body-md text-secondary">vs Rp 11.116.000 kemarin</div>
-                    </div>
-                </div>
-
-                <!-- Metric 2: Avg Ticket -->
-                <div class="bg-surface-container-lowest p-lg rounded-[18px] shadow-stripe-card flex flex-col justify-between">
-                    <div class="flex justify-between items-start mb-md">
-                        <span class="font-label-md text-label-md text-secondary uppercase tracking-wider">Rata-rata Pesanan</span>
-                        <span class="bg-surface-container-high text-on-surface px-2 py-1 rounded text-xs font-medium flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[14px]">arrow_upward</span> 3%
-                        </span>
-                    </div>
-                    <div>
-                        <div class="font-headline-lg text-headline-lg text-on-surface mb-sm">Rp 42.500</div>
-                        <div class="font-body-md text-body-md text-secondary">vs Rp 41.200 kemarin</div>
-                    </div>
-                </div>
-
-                <!-- Metric 3: Labor Cost -->
-                <div class="bg-surface-container-lowest p-lg rounded-[18px] shadow-stripe-card flex flex-col justify-between">
-                    <div class="flex justify-between items-start mb-md">
-                        <span class="font-label-md text-label-md text-secondary uppercase tracking-wider">Biaya Tenaga Kerja %</span>
-                        <span class="bg-error-container text-on-error-container px-2 py-1 rounded text-xs font-medium flex items-center gap-1">
-                            <span class="material-symbols-outlined text-[14px]">arrow_upward</span> 1.2%
-                        </span>
-                    </div>
-                    <div>
-                        <div class="font-headline-lg text-headline-lg text-on-surface mb-sm">24.8%</div>
-                        <div class="font-body-md text-body-md text-secondary">Target: 22.0%</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Main Chart Area -->
-            <section class="bg-surface-container-lowest p-lg rounded-[18px] shadow-stripe-ambient flex flex-col h-[400px]">
-                <div class="flex justify-between items-center mb-lg">
-                    <h3 class="font-title-lg text-title-lg text-on-surface">Performa 24 Jam</h3>
-                    <div class="flex gap-2">
-                        <button class="px-3 py-1 rounded border border-outline-variant font-label-md text-label-md text-secondary hover:text-on-surface">Semua Cabang</button>
-                        <button class="px-3 py-1 rounded border border-outline-variant font-label-md text-label-md text-secondary hover:text-on-surface">Pendapatan</button>
-                    </div>
-                </div>
-                <!-- Chart Area SVG -->
-                <div class="flex-1 relative w-full h-full rounded border border-surface-variant flex items-end p-4">
-                    <svg class="absolute inset-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 1000 300">
-                        <line stroke="#f0eded" stroke-width="1" x1="0" x2="1000" y1="50" y2="50"></line>
-                        <line stroke="#f0eded" stroke-width="1" x1="0" x2="1000" y1="150" y2="150"></line>
-                        <line stroke="#f0eded" stroke-width="1" x1="0" x2="1000" y1="250" y2="250"></line>
-                        
-                        <path d="M0 250 L0 180 Q 100 200, 200 150 T 400 120 T 600 80 T 800 110 T 1000 40 L1000 250 Z" fill="url(#gradientPrimary)" opacity="0.1"></path>
-                        <path d="M0 180 Q 100 200, 200 150 T 400 120 T 600 80 T 800 110 T 1000 40" fill="none" stroke="#d62828" stroke-linecap="round" stroke-width="3"></path>
-                        <path d="M0 200 Q 100 220, 200 180 T 400 160 T 600 120 T 800 140 T 1000 90" fill="none" stroke="#ccc5c3" stroke-dasharray="5,5" stroke-linecap="round" stroke-width="2"></path>
-                        <defs>
-                            <lineargradient id="gradientPrimary" x1="0" x2="0" y1="0" y2="1">
-                                <stop offset="0%" stop-color="#d62828"></stop>
-                                <stop offset="100%" stop-color="#ffffff" stop-opacity="0"></stop>
-                            </lineargradient>
-                        </defs>
-                    </svg>
-                </div>
-            </section>
-
-            <!-- Top Performing Locations Table -->
-            <section class="bg-surface-container-lowest rounded-[18px] shadow-stripe-card overflow-hidden">
-                <div class="p-lg border-b border-surface-variant flex justify-between items-center">
-                    <h3 class="font-title-lg text-title-lg text-on-surface">Cabang Performa Terbaik</h3>
-                    <a class="font-label-md text-label-md text-primary hover:underline" href="#">Lihat Semua</a>
-                </div>
-                <table class="w-full text-left font-tabular-nums text-tabular-nums">
-                    <thead class="bg-surface-container-low font-label-md text-label-md text-secondary uppercase tracking-wider">
-                        <tr>
-                            <th class="py-sm px-lg font-medium">Cabang</th>
-                            <th class="py-sm px-lg font-medium">Pendapatan (Hari Ini)</th>
-                            <th class="py-sm px-lg font-medium">Pesanan</th>
-                            <th class="py-sm px-lg font-medium">Tren</th>
-                            <th class="py-sm px-lg font-medium text-right">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-surface-variant">
-                        <tr class="hover:bg-[#FFF7F5] transition-colors">
-                            <td class="py-md px-lg font-body-md text-body-md text-on-surface">Cabang Margonda Utama</td>
-                            <td class="py-md px-lg font-medium">Rp 6.450.000</td>
-                            <td class="py-md px-lg text-secondary">312</td>
-                            <td class="py-md px-lg">
-                                <svg height="20" viewbox="0 0 60 20" width="60">
-                                    <path class="sparkline-up" d="M0 15 Q 15 5, 30 10 T 60 2"></path>
-                                </svg>
-                            </td>
-                            <td class="py-md px-lg text-right">
-                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">Online</span>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-[#FFF7F5] transition-colors">
-                            <td class="py-md px-lg font-body-md text-body-md text-on-surface">Cabang Mall Depok</td>
-                            <td class="py-md px-lg font-medium">Rp 4.200.000</td>
-                            <td class="py-md px-lg text-secondary">245</td>
-                            <td class="py-md px-lg">
-                                <svg height="20" viewbox="0 0 60 20" width="60">
-                                    <path class="sparkline-up" d="M0 18 Q 15 15, 30 8 T 60 5"></path>
-                                </svg>
-                            </td>
-                            <td class="py-md px-lg text-right">
-                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">Online</span>
-                            </td>
-                        </tr>
-                        <tr class="hover:bg-[#FFF7F5] transition-colors">
-                            <td class="py-md px-lg font-body-md text-body-md text-on-surface">Cabang Kelapa Dua</td>
-                            <td class="py-md px-lg font-medium">Rp 1.800.000</td>
-                            <td class="py-md px-lg text-secondary">110</td>
-                            <td class="py-md px-lg">
-                                <svg height="20" viewbox="0 0 60 20" width="60">
-                                    <path class="sparkline-down" d="M0 5 Q 15 10, 30 5 T 60 15"></path>
-                                </svg>
-                            </td>
-                            <td class="py-md px-lg text-right">
-                                <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">Online</span>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
-        </div>
-
-        <!-- Right Sidebar: Live Incidents -->
-        <aside class="hidden xl:flex flex-col w-[320px] gap-lg">
-            <div class="bg-surface-container-lowest p-lg rounded-[18px] shadow-stripe-card flex-1 flex flex-col">
-                <div class="flex justify-between items-center mb-lg pb-sm border-b border-surface-variant">
-                    <h3 class="font-title-lg text-title-lg text-on-surface flex items-center gap-sm">
-                        <span class="material-symbols-outlined text-primary">warning</span>
-                        Insiden Langsung
-                    </h3>
-                    <span class="bg-primary-container text-on-primary px-2 py-0.5 rounded-full text-xs font-bold">3</span>
-                </div>
-                <div class="flex flex-col gap-md overflow-y-auto">
-                    <!-- Incident 1 -->
-                    <div class="p-sm rounded border border-outline-variant hover:border-primary transition-colors cursor-pointer group">
-                        <div class="flex justify-between items-start mb-xs">
-                            <span class="font-label-md text-label-md text-error font-semibold uppercase">Peringatan Stok</span>
-                            <span class="text-xs text-secondary">2m lalu</span>
-                        </div>
-                        <h4 class="font-body-md text-body-md text-on-surface font-medium mb-xs">Stok Menipis: Alpukat</h4>
-                        <p class="text-xs text-secondary">Cabang Mall Depok sangat kekurangan alpukat (Est. 1 jam tersisa).</p>
-                    </div>
-                    <!-- Incident 2 -->
-                    <div class="p-sm rounded border border-outline-variant hover:border-primary transition-colors cursor-pointer group">
-                        <div class="flex justify-between items-start mb-xs">
-                            <span class="font-label-md text-label-md text-[#d97706] font-semibold uppercase">Kepegawaian</span>
-                            <span class="text-xs text-secondary">15m lalu</span>
-                        </div>
-                        <h4 class="font-body-md text-body-md text-on-surface font-medium mb-xs">Terlambat Masuk</h4>
-                        <p class="text-xs text-secondary">2 koki persiapan belum masuk untuk shift makan siang di Margonda Utama.</p>
-                    </div>
-                    <!-- Incident 3 -->
-                    <div class="p-sm rounded border border-outline-variant hover:border-primary transition-colors cursor-pointer group">
-                        <div class="flex justify-between items-start mb-xs">
-                            <span class="font-label-md text-label-md text-secondary font-semibold uppercase">Sistem</span>
-                            <span class="text-xs text-secondary">1j lalu</span>
-                        </div>
-                        <h4 class="font-body-md text-body-md text-on-surface font-medium mb-xs">Kasir (POS) Offline</h4>
-                        <p class="text-xs text-secondary">Terminal 2 di Cabang Kelapa Dua dilaporkan offline. Memulai ulang otomatis.</p>
-                    </div>
-                </div>
-            </div>
-        </aside>
-    </div>
-</main>
-
-</body>
-</html>
+        });
+    });
+</script>
+@endpush
